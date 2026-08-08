@@ -1,23 +1,31 @@
 macro_rules! convertible_enum {
     (
-        $(#[$attr:meta])*
-        $name: ident,
-        repr = $repr: ty,
-        unknown = $unknown_variant: ident,
-        {$($variant: ident = $value: expr),* $(,)?}
+        repr = $repr:ident,
+        unknown = $unknown_variant:ident,
+        $(#[$outer:meta])*
+        $vis:vis enum $name:ident {
+            $(
+                $(#[$inner:meta])*
+                $variant:ident = $value:expr
+            ),* $(,)?
+        }
     ) => {
-        #[derive(Debug, Copy, Clone, PartialEq, Hash, Eq)]
-        $(#[$attr])*
+        $(#[$outer])*
         #[repr($repr)]
-        pub enum $name {
-            $($variant = $value,)*
+        $vis enum $name {
+            $(
+                $(#[$inner])*
+                $variant = $value,
+            )*
         }
 
         impl From<$repr> for $name {
             fn from(value: $repr) -> Self {
                 match value {
-                    $($value => $name::$variant,)*
-                    _ => $name::$unknown_variant,
+                    $(
+                        $value => Self::$variant,
+                    )*
+                    _ => Self::$unknown_variant,
                 }
             }
         }
