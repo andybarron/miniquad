@@ -24,9 +24,9 @@ convertible_enum! {
     repr = u16,
     unknown = Unknown,
 
+    #[derive(Debug, Copy, Clone, PartialEq, Hash, Eq)]
     /// These keycode values are based off of X11's `keysymdef.h`.
     /// Missing keycodes from that list are given the prefix 0x01.
-    #[derive(Debug, Copy, Clone, PartialEq, Hash, Eq)]
     pub enum KeyCode {
         Space = 0x0020,
         Apostrophe = 0x0027,
