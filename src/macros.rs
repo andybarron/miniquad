@@ -1,3 +1,21 @@
+/// This macro accepts a data-less enum definition and generates `From` impls
+/// for converting between the enum and its repr type.
+///
+/// Example usage:
+/// ```ignore
+/// convertible_enum! {
+///     repr = u8,
+///     unknown = Unknown,
+///
+///     #[derive(Debug, Copy, Clone, PartialEq, Hash, Eq)]
+///     pub enum MouseButton {
+///         Left = 0,
+///         Middle = 1,
+///         Right = 2,
+///         Unknown = 255,
+///     }
+/// }
+/// ```
 macro_rules! convertible_enum {
     (
         repr = $repr:ident,
