@@ -1,18 +1,13 @@
-#[derive(Debug, Copy, Clone, PartialEq, Hash, Eq, num_enum::FromPrimitive)]
-#[repr(u8)]
-pub enum MouseButton {
+use crate::macros::convertible_enum;
+
+convertible_enum!(
+    /// Foo bar
+MouseButton, repr = u8, unknown = Unknown, {
     Left = 0,
     Middle = 1,
     Right = 2,
-    #[num_enum(default)]
     Unknown = 255,
-}
-
-impl From<MouseButton> for u8 {
-    fn from(button: MouseButton) -> Self {
-        button as u8
-    }
-}
+});
 
 #[derive(Debug, Copy, Clone)]
 pub struct Touch {
